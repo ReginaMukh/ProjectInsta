@@ -1,0 +1,23 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= @user.name %>
+      </h1>
+    </section>
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+  <div class="col-md-8">
+  <%= render 'follow_form' if !current_user.nil? %>
+    <% if @user.posts.any? %>
+      <h3>Публикация (<%= @user.posts.count %>)</h3>
+      <ol class="publications">
+        <%= render @posts %>
+      </ol>
+      <%= will_paginate @posts %>
+    <% end %>
+  </div>
+</div>
