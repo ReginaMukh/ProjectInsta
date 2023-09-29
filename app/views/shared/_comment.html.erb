@@ -1,0 +1,7 @@
+<% if @comment_items.present? %>
+<span class="user"><%= @comment.commenter %></span>
+<span class="content">
+<%= @comment.body %>
+</span>
+<% else %> NONONO
+<% end %>

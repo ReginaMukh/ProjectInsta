@@ -1,6 +1,14 @@
 class PostsController < ApplicationController
   before_action :correct_user,   only: :destroy
 
+  def new
+    @post = Post.new
+  end
+  
+  def show
+    @post = Post.find(params[:id])
+  end
+
   # POST /posts or /posts.json
     def create
       @post = current_user.posts.build(post_params)

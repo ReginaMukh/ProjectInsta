@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :correct_user, only: [:edit, :update]
+ 
 
     def index
       @users = User.all
@@ -32,13 +32,16 @@ class UsersController < ApplicationController
   
     def update
       @user = User.find(params[:id])
-      if @user.update_attributes(user_params)
+      params = build_params(user_params)
+      if @user.update(params)
         flash[:success] = "Profile updated"
-        redirect_to @user
+        
+        redirect_to user_url(@user)
       else
         render 'edit'
       end
     end
+
     
     def following
       @title = "Following"
@@ -56,15 +59,16 @@ class UsersController < ApplicationController
   
     private
       def user_params
-        params.require(:user).permit(:name, :email, :password,
-                                     :password_confirmation)
+        params.require(:user).permit(:name, :email, :password, :password_confirmation)
       end
   
-  
-      def correct_user
-        @user = User.find(params[:id])
-        redirect_to(root_url) unless @user == current_user
+      def build_params(user_params)
+        user_params[:password] = user_params[:password].presence
+        user_params[:password_confirmation] = user_params[:password_confirmation].presence
+        user_params.compact
       end
+
+     
 
   
 end

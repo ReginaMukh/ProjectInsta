@@ -46,6 +46,7 @@ gem "devise"
 gem 'bootstrap-will_paginate'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'bootstrap-sass'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
