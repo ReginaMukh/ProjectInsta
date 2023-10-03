@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :comments
+  
   devise_for :users
   resources :posts
+  resources :comments
   resources :relationships, only: [:create, :destroy]
- 
+ resources :likes, only: [:create, :destroy]
   root "root#home"
  
   resources :users do
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :comments
+    resources :likes
   end
 
 end

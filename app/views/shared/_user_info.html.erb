@@ -1,4 +1,4 @@
 
-<h1><%= current_user.name %></h1>
+<p><span class="profile_name"><%= current_user.name %></span></p>
 <p><span class="profile"><%= link_to "Мой профиль", current_user %></span></p>
 <p><span><%= pluralize(current_user.posts.count, "publication") %></span></p>
