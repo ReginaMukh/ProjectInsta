@@ -29,8 +29,7 @@
   <% post.comments.each do |comment| %>
         <span>
         <%= comment.commenter %> =>
-        <%= comment.body %>
-        </span> 
+        <%= comment.body %> </br>
         <% if current_user?(post.user) %>
             <%= link_to "delete comment", comment_path(comment), data: {"turbo-method": :delete} %>
          </br> <% end %>

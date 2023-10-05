@@ -9,7 +9,6 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  # POST /posts or /posts.json
     def create
       @post = current_user.posts.build(post_params)
       if @post.save
@@ -21,16 +20,8 @@ class PostsController < ApplicationController
       end
     end
 
-  # PATCH/PUT /posts/1 or /posts/1.json
-  def update
-      if @post.update(post_params)
-        redirect_to post_url(@post), notice: "Post was successfully updated."
-      else
-      render :edit, status: :unprocessable_entity
-      end
-  end
-
-  # DELETE /posts/1 or /posts/1.json
+  
+ 
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
@@ -40,7 +31,7 @@ class PostsController < ApplicationController
 
   private
 
-    # Only allow a list of trusted parameters through.
+  
     def post_params
       params.require(:post).permit(:content, :picture)
     end

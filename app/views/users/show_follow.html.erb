@@ -3,7 +3,7 @@
   <aside class="col-md-4">
     <section class="user_info">
       <h1><%= @user.name %></h1>
-      <span><%= link_to "view my profile", @user %></span>
+      <span class="profile"><%= link_to "Мой профиль", @user %></span>
       <span><b>Публикации:</b> <%= @user.posts.count %></span>
     </section>
     <section class="stats">
@@ -14,7 +14,9 @@
     <h3><%= @title %></h3>
     <% if @users.any? %>
       <ul class="users follow">
-        <%= render @users %>
+      <% @users.each do |user| %>
+        <%= link_to user.name, user %>
+        <% end %>
       </ul>
       <%= will_paginate %>
     <% end %>

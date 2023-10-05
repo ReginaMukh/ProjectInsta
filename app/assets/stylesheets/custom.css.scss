@@ -44,6 +44,13 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
     color: #777;
   }
+
+  h3 {
+    font-size: 2em;
+    letter-spacing: -2px;
+    text-align: center;
+    color: #0a1766;
+}
   
   p {
     font-size: 1.1em;
@@ -156,10 +163,14 @@ input {
   .user {
     margin-top: 5em;
     padding-top: 0;
+    font-size: 120%; /* Размер шрифта в процентах */ 
+    font-family: serif; /* Шрифт с засечками */ 
   }
   .content {
     display: block;
     margin-left: 60px;
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    font-size: 100%; 
     img {
       display: block;
       padding: 5px 0;
@@ -278,14 +289,16 @@ span.picture {
     white-space: nowrap; 
    } 
    .post {
-    background:  #fffff5; /* Цвет фона */
     display: block;
     margin-left: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+    font-size: 100%; 
     img {
       display: block;
       padding: 5px 0;
     }
    } 
+
    .likes {
     color: maroon; /* Цвет текста */
     font-weight: 600; /* Жирное начертание */
