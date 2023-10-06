@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :posts
   resources :comments
   resources :relationships, only: [:create, :destroy]
- resources :likes, only: [:create, :destroy]
+  resources :likes, only: [:create, :destroy]
   root "root#home"
  
   resources :users do

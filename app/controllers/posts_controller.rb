@@ -9,8 +9,8 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-    def create
-      @post = current_user.posts.build(post_params)
+  def create
+    @post = current_user.posts.build(post_params)
       if @post.save
         flash[:success] = "publication created!"
         redirect_to root_url
@@ -18,26 +18,23 @@ class PostsController < ApplicationController
         @feed_items = []
         render 'root/home'
       end
-    end
+  end
 
-  
- 
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-      flash[:success] = "Публикация удалена"
-      redirect_to request.referrer || root_url
+    flash[:success] = "Публикация удалена"
+    redirect_to request.referrer || root_url
   end
 
   private
 
-  
-    def post_params
-      params.require(:post).permit(:content, :picture)
-    end
-
-    def correct_user
-      @post = current_user.posts.find_by(id: params[:id])
-      redirect_to root_url if @post.nil?
-    end
+  def post_params
+    params.require(:post).permit(:content, :picture)
   end
+
+  def correct_user
+    @post = current_user.posts.find_by(id: params[:id])
+    redirect_to root_url if @post.nil?
+  end
+end

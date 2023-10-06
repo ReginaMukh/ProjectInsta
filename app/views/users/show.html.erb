@@ -13,7 +13,7 @@
   <div class="col-md-8">
   <%= render 'follow_form' if !current_user.nil? %>
     <% if @user.posts.any? %>
-      <h3>Публикация (<%= @user.posts.count %>)</h3>
+      <h3>Публикация <%= @user.posts.count %> </h3>
       <ol class="publications">
         <%= render @posts %>
       </ol>

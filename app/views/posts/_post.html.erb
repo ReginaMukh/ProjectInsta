@@ -2,20 +2,23 @@
 <%@feed_items = current_user.feed.paginate(page: params[:page])%>
 <% if @feed_items.any? %>
 
-  <span class="user"><%= link_to post.user.name, post.user %></span>
+  <span class="user">
+    <%= link_to post.user.email, post.user %></span>
   <span class="post">
-  <%= post.content %>
-  <%= image_tag post.picture.url if post.picture? %>
+    <%= post.content %>
+    <%= image_tag post.picture.url if post.picture? %>
   </span>
 
   <div class="likes"> <p>
- <% like = current_user.likes.find_by(post: post) %>
+    <% like = current_user.likes.find_by(post: post) %>
   <% if like.nil? %>
-  <%= button_to "Like", likes_path(post), params: { like: { post_id: post.id }}, method: :post %>
+    <%= button_to "Like", likes_path(post), params: { like: { post_id: post.id }}, method: :post %>
   <% else %>
-  <%= button_to "unLike", like_path(like), method: :delete %>
+    <%= button_to "DisLike", like_path(like), method: :delete %>
   <% end %>
-  <span class="like"> <%= post.likes.count %> Likes</span>
+
+  <span class="like"> 
+    <%= post.likes.count %> Likes</span>
   <span class="timestamp"> 
         Posted <%= time_ago_in_words(post.created_at) %> ago.</span>
           <% if current_user?(post.user) %>
@@ -27,26 +30,21 @@
   <p class="exampleTitle">Комментарии</p>
   <p class="example">
   <% post.comments.each do |comment| %>
-        <span>
-        <%= comment.commenter %> =>
-        <%= comment.body %> </br>
+    <span>
+      <%= link_to comment.user.email, comment.user, style: "color: black" %>:
+      <%= comment.body %> </br>
         <% if current_user?(post.user) %>
-            <%= link_to "delete comment", comment_path(comment), data: {"turbo-method": :delete} %>
-         </br> <% end %>
+          <%= link_to "delete comment", comment_path(comment), data: {"turbo-method": :delete} %>
+        </br> <% end %>
       <% end %>
-      </p>
-      
-
+  </p>
 
   <%= form_with(model: [ post, Comment.new ]) do |form| %>
-    <div class = "commenting">
-    
-    <%= form.text_field :commenter,placeholder: "Your name..." %>
-  
-    <%= form.text_area :body, placeholder: "Your review..." %>
-   
+  <div class = "commenting">
+    <%= form.text_area :body, placeholder: "Your review...", required: true %>
     <%= form.submit "Commit", class: "btn btn-primary"%>
-    </div>
-  <% end %>
+  </div>
+  
+<% end %>
 <% end %>
 </div>

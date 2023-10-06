@@ -15,7 +15,6 @@ RSpec.describe UsersController, type: :controller do
 
     context 'when user is logged in' do
       before { sign_in user }
-
       it 'should return 200', :aggregate_failures do
         subject
         expect(response).to have_http_status(:success)
@@ -23,29 +22,29 @@ RSpec.describe UsersController, type: :controller do
       end
 
     end
-    end
+  end
     
   describe '#update' do
-  let(:user) { FactoryBot.create(:user) }
-  let(:new_email) { FFaker::Internet.email }
+    let(:user) { FactoryBot.create(:user) }
+    let(:new_email) { FFaker::Internet.email }
 
-  before { sign_in user }
+    before { sign_in user }
 
-  context 'with valid attributes' do
-    it 'updates the user profile' do
+    context 'with valid attributes' do
+      it 'updates the user profile' do
       patch :update, params: { id: user.id, user: { email: new_email } }
       user.reload
       expect(user.email).to eq(new_email)
     end
 
-    it 'redirects to the user profile' do
+      it 'redirects to the user profile' do
       patch :update, params: { id: user.id, user: { email: new_email } }
       expect(response).to redirect_to(user_path(user))
     end
   end
 
-  context 'with invalid attributes' do
-    let(:invalid_email) { "invalid" }
+    context 'with invalid attributes' do
+      let(:invalid_email) { "invalid" }
 
     it 'does not update the user profile' do
       patch :update, params: { id: user.id, user: { email: invalid_email } }
@@ -59,19 +58,16 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 end
-describe '#following' do
+
+  describe '#following' do
     let(:user) { FactoryBot.create(:user) }
-    subject { get :following, params: { id: user.id } }
-
-    context 'when user is following' do
-      
-
-      it 'should return user page' do
-        subject
-        @users = instance_variable_get(:@user)
-        expect(response).to render_template(user_path)
+  
+    context 'is user not logged in' do  
+    it 'should redirect following ' do  
+      get :following, params: { id: user.id }
+      expect(response).to redirect_to(new_user_session_path)
       end
-
-    end
   end
+
+end
 end

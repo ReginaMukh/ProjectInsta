@@ -13,9 +13,9 @@
   <div class="col-md-8">
     <h3><%= @title %></h3>
     <% if @users.any? %>
-      <ul class="users follow">
+      <ul class="profile">
       <% @users.each do |user| %>
-        <%= link_to user.name, user %>
+        <%= link_to user.name, user %> </br>
         <% end %>
       </ul>
       <%= will_paginate %>

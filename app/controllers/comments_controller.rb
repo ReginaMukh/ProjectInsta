@@ -1,35 +1,25 @@
 class CommentsController < ApplicationController
-
-  
-
-  # POST /comments or /comments.json
-  def create
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.build(comment_params)
+def create
+  @post = Post.find(params[:post_id])
+  params = comment_params.merge({ user: current_user })
+  @comment = @post.comments.build(params)
     if @comment.save
       redirect_to request.referrer || root_url
     else
-      render 'root/home'
+      flash[:alert] = "Error"
     end
-  end
+end
     
+def destroy
+  @comment = Comment.find(params[:id])
+  @comment.destroy
+  redirect_to request.referrer || root_url
+end
 
+private
 
-  # DELETE /comments/1 or /comments/1.json
-  def destroy
-    @comment = Comment.find(params[:id])
-    @comment.destroy
-    redirect_to request.referrer || root_url
-  
-  end
+def comment_params
+  params.require(:comment).permit(:body)
+end
 
-  private
-
-
-    # Only allow a list of trusted parameters through.
-    def comment_params
-      params.require(:comment).permit(:commenter, :body)
-    end
-
-  
 end

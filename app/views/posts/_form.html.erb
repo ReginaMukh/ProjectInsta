@@ -9,13 +9,15 @@
       </ul>
     </div>
   <% end %>
+
   <div>
     <%= form.text_area :content, placeholder: "Compose new micropost..." %>
   </div>
     <%= form.submit "Post", class: "btn btn-primary"%>
-    <span class="picture">
+  <span class="picture">
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
-     </span>
+  </span>
+  
 <% end %>
 
 <script type="text/javascript">

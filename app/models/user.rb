@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :posts, dependent: :destroy
-  has_many :likes
-
+  has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
                                   dependent:   :destroy
@@ -27,10 +27,8 @@ class User < ApplicationRecord
 
 # Возвращает ленту сообщений пользователя.
 def feed
-        following_ids = "SELECT followed_id FROM relationships
-                WHERE  follower_id = :user_id"
-        Post.where("user_id IN (#{following_ids})
-                OR user_id = :user_id", user_id: id)
+  feed_authors = following.ids << id
+  Post.where(user_id: feed_authors)
 end
 
 # подписаться на пользователя.
@@ -40,7 +38,10 @@ end
 
 # отписаться от пользователя.
 def unfollow(other_user)
-  active_relationships.find_by(followed_id: other_user.id).destroy
+  status = active_relationships.find_by(followed_id: other_user.id)
+  if status.present?
+    status.destroy
+  end
 end
 
 # Возвращает true, если текущий пользователь подписан на другого пользователя.

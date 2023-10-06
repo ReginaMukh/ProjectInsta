@@ -1,34 +1,30 @@
 <% if user_signed_in? %>
   <div class="container">
   <div class="row">
-    <div class="col-xs-6 col-md-4">
+  <div class="col-xs-6 col-md-4">
+    
+    <section class="user_info">
+      <%= render 'shared/user_info' %>
+    </section>
 
-      <section class="user_info">
-        <%= render 'shared/user_info' %>
-      </section>
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
 
-      <section class="stats">
-        <%= render 'shared/stats' %>
-      </section>
+    <p> <section class="publication_form">
+    <%= render 'shared/publication_form' %></section> </p>
 
-      <p> <section class="publication_form">
-        <%= render 'shared/publication_form' %>
-      </section> </p>
-    </div>  
+  </div>  
 
     <div class="col-xs-12 col-md-8">
       <h3>Лента публикаций</h3>
       <%= render 'shared/feed' %>
-      
     </div>
- 
   </div>
   </div>
 <% else %>
     <div class="center jumbotron">
     <h1>Welcome to the InstaProject</h1>
-
     <h2> This is the home page for the InstaProject </h2>
-
     <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %> </div>
 <% end %>
