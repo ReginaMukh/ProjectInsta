@@ -1,8 +1,8 @@
 <div id="<%= dom_id post %>">
 <%@feed_items = current_user.feed.paginate(page: params[:page])%>
 <% if @feed_items.any? %>
-
-  <span class="user">
+   
+   </br><span class="user">
     <%= link_to post.user.email, post.user %></span>
   <span class="post">
     <%= post.content %>
@@ -33,7 +33,7 @@
     <span>
       <%= link_to comment.user.email, comment.user, style: "color: black" %>:
       <%= comment.body %> </br>
-        <% if current_user?(post.user) %>
+        <% if current_user?(post.user) || current_user?(comment.user)%>
           <%= link_to "delete comment", comment_path(comment), data: {"turbo-method": :delete} %>
         </br> <% end %>
       <% end %>
@@ -42,7 +42,7 @@
   <%= form_with(model: [ post, Comment.new ]) do |form| %>
   <div class = "commenting">
     <%= form.text_area :body, placeholder: "Your review...", required: true %>
-    <%= form.submit "Commit", class: "btn btn-primary"%>
+    <%= form.submit "comment", class: "btn btn-primary"%>
   </div>
   
 <% end %>
