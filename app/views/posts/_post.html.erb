@@ -4,29 +4,34 @@
    
    </br><span class="user">
     <%= link_to post.user.email, post.user %></span>
+   
   <span class="post">
     <%= post.content %>
     <%= image_tag post.picture.url if post.picture? %>
   </span>
 
+  <span class="timestamp"> 
+        Posted <%= time_ago_in_words(post.created_at) %> ago.</span>
+  <span class="like"> 
+    <i class="bi bi-suit-heart-fill"></i>
+    <%= post.likes.count %> Likes</span>
+
   <div class="likes"> <p>
     <% like = current_user.likes.find_by(post: post) %>
   <% if like.nil? %>
-    <%= button_to "Like", likes_path(post), params: { like: { post_id: post.id }}, method: :post %>
+    <%= button_to "Like post", likes_path(post), params: { like: { post_id: post.id }}, method: :post %>
   <% else %>
-    <%= button_to "DisLike", like_path(like), method: :delete %>
+    <%= button_to "DisLike post", like_path(like), method: :delete %>
   <% end %>
+     <% if current_user?(post.user) %>
+        <%= link_to "delete post", post_path(post), data: {"turbo-method": :delete} %>
+        <i class="bi bi-signpost-2" style=color:blue></i>
+        <%= link_to "edit post", edit_post_path(post) %>
+      <% end %>
+    
 
-  <span class="like"> 
-    <%= post.likes.count %> Likes</span>
-  <span class="timestamp"> 
-        Posted <%= time_ago_in_words(post.created_at) %> ago.</span>
-          <% if current_user?(post.user) %>
-            <%= link_to "delete post", post_path(post), data: {"turbo-method": :delete} %>
-          <% end %>
    </p> </div>
- 
-  
+
   <p class="exampleTitle">Комментарии</p>
   <p class="example">
   <% post.comments.each do |comment| %>

@@ -5,12 +5,13 @@
   <div class="center">
   <%= f.text_area :content, placeholder: "My new post..." %>
   </div>
-  <p>
-  <%= f.submit "Post", class: "btn btn-primary" %> 
-  </p>
+  
   <span class="picture">
   <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   </span>
+  <p>
+  <%= f.submit "Post", class: "btn btn-primary" %> 
+  </p>
 </aside>
 <% end %>
 

@@ -62,6 +62,7 @@ group :development, :test do
   gem 'ffaker'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'simplecov', require: false, group: :test
 end
 
 group :development do

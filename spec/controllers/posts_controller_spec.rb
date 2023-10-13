@@ -33,8 +33,45 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
+  
+  describe 'PUT #update' do
+let(:valid_attributes) { { content: 'Valid content', user_id: user.id } }
+let(:invalid_attributes) { { content: '', user_id: user.id } }
+
+before do
+  user = create(:user)
+  @post = create(:post, user_id: user.id)
+  sign_in user 
+end
+  context 'with valid parameters' do
+    it 'updates the requested post' do
+      patch :update, params: { id: @post.id, post: { content: 'Valid content'} }
+      @post.reload
+      expect(@post.content).to eq(valid_attributes[:content])
+    end
 
 
+    it 'redirects to the root URL' do
+      patch :update, params: { id: @post.id, post: valid_attributes }
+      expect(response).to redirect_to(root_url)
+    end
+  end
+  context 'with invalid parameters' do
+    it 'does not update the requested post' do
+      patch :update, params: { id: @post.id, post: invalid_attributes }
+      @post.reload
+      expect(@post.content).not_to eq(invalid_attributes[:content])
+    end
+
+    it 'renders the edit view' do
+      patch :update, params: { id: @post.id, post: invalid_attributes }
+      expect(response).to render_template('edit')
+    end
+  end
+end
+  
+
+  
   describe '#destroy' do
     let(:valid_attributes) { { content: 'Test Post' } }
     let(:invalid_attributes) { { content: nil } }

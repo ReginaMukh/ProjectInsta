@@ -178,6 +178,7 @@ input {
   }
   .timestamp {
     color: $gray-light;
+    margin-left: 30px;
     
   }
   .gravatar {
@@ -300,11 +301,11 @@ span.picture {
    } 
 
    .likes {
-    color: maroon; /* Цвет текста */
+    color: rgb(24, 27, 187); /* Цвет текста */
     font-weight: 600; /* Жирное начертание */
      }
 
     .like {
       color: maroon; /* Цвет текста */
-      margin-left: 50px;
+      
       }

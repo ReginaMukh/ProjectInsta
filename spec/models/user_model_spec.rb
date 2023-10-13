@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:user1) { create(:user) }
+  let(:user2) { create(:user) }
+
 
     it 'columns', :aggregate_failures do
         is_expected.to have_db_column(:name).of_type(:string)
@@ -40,29 +43,41 @@ RSpec.describe User, type: :model do
       expect(user).not_to be_valid
     end
   end
-
   
-
-  describe 'follow' do
-    let(:user) { create(:user) }
-    
-    it 'should follow a user' do
-      other_user = create(:user)
-      expect {user.follow(other_user)}.to change(Relationship, :count).by(1)
-      expect(user.following?(other_user)).to be_truthy
+  describe '#follow' do
+    it 'creates a new active relationship' do
+      expect { user1.follow(user2) }.to change(user1.active_relationships, :count).by(1)
     end
-end
-
-describe 'unfollow' do
-    let(:user) { create(:user) }
-    it 'should unfollow a user' do
-         other_user = create(:user)
-      subject { delete :unfollow, params: { followed_id: other_user.id } }
-      expect {user.unfollow(other_user)}.to change(Relationship, :count).by(0)
-      expect(user.following?(other_user)).to be_falsey
-   
-    end
-    
   end
+
+  describe '#unfollow' do
+    before do
+      user1.follow(user2)
+    end
+
+    it 'deletes an existing active relationship' do
+      expect { user1.unfollow(user2) }.to change(user1.active_relationships, :count).by(-1)
+    end
+  end
+
+  describe '#following?' do
+    context 'when user1 follows user2' do
+      before do
+        user1.follow(user2)
+      end
+
+      it 'returns true' do
+        expect(user1.following?(user2)).to be true
+      end
+    end
+
+    context 'when user1 does not follow user2' do
+      it 'returns false' do
+        expect(user1.following?(user2)).to be false
+      end
+    end
+  end
+
+    
 end
 
